@@ -66,7 +66,7 @@ public class TreeNode {
 		if (root == null)
 			return;
 		inOrder(root.left);
-		System.out.println(root.val + " ");
+		System.out.print(root.val + " ");
 		inOrder(root.right);
 	}
 
@@ -74,7 +74,7 @@ public class TreeNode {
 	public static void preOrder(TreeNode root) {
 		if (root == null)
 			return;
-		System.out.println(root.val + " ");
+		System.out.print(root.val + " ");
 		preOrder(root.left);
 		preOrder(root.right);
 	}
@@ -85,7 +85,7 @@ public class TreeNode {
 			return;
 		postOrder(root.left);
 		postOrder(root.right);
-		System.out.println(root.val + " ");
+		System.out.print(root.val + " ");
 	}
 
 	public static void printTree(TreeNode root, String indent, boolean isLeft) {

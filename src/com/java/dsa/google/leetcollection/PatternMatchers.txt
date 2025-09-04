@@ -1,0 +1,102 @@
+You are given a pattern consisting of alpha characters and [] (square brackets). Anything outside of [] is literal, anything inside [] are alternatives (pick exactly one). Return all strings from a list of strings that match a given pattern. The pattern changes for every call, the list of strings stays the same and can be preprocessed.
+Example:
+pattern: "tele[op]ho[bnm]e"
+list: ["cat", "dog", "telephone", "telephonepole", "tele", "telehoe", "teleophobnme"]
+result: ["telephone"]
+
+
+Absolutely, Manikanta! Here's how you can implement the pattern-matching logic in **Java**, using a clean and modular approach that aligns with your style of scalable, maintainable tooling.
+
+---
+
+### 🧩 Problem Recap
+
+You have:
+- A **pattern** like `"tele[op]ho[bnm]e"` where:
+  - Characters outside `[]` are literals.
+  - Characters inside `[]` are alternatives (choose exactly one).
+- A **fixed list of strings** to match against.
+- You want to return all strings that match the pattern exactly.
+
+---
+
+### ⚙️ Java Implementation Strategy
+
+We'll break this into two parts:
+
+#### 1. **Pattern Expansion**
+Convert the custom pattern into a **Java regex**:
+- `"tele[op]ho[bnm]e"` → `"tele[o|p]ho[b|n|m]e"` → `"^tele(o|p)ho(b|n|m)e$"`
+
+#### 2. **Matching**
+Use `Pattern` and `Matcher` from `java.util.regex` to match each string.
+
+---
+
+### ✅ Java Code
+
+```java
+import java.util.*;
+import java.util.regex.*;
+
+public class PatternMatcher {
+
+    // Converts custom pattern to Java regex
+    public static String expandPattern(String pattern) {
+        StringBuilder regex = new StringBuilder("^"); // Match from start
+        int i = 0;
+        while (i < pattern.length()) {
+            char c = pattern.charAt(i);
+            if (c == '[') {
+                i++;
+                StringBuilder group = new StringBuilder();
+                while (i < pattern.length() && pattern.charAt(i) != ']') {
+                    group.append(pattern.charAt(i)).append("|");
+                    i++;
+                }
+                if (group.length() > 0) group.setLength(group.length() - 1); // Remove trailing '|'
+                regex.append("(").append(group).append(")");
+            } else {
+                regex.append(Pattern.quote(String.valueOf(c))); // Escape literals
+            }
+            i++;
+        }
+        regex.append("$"); // Match till end
+        return regex.toString();
+    }
+
+    // Filters strings that match the pattern
+    public static List<String> matchPattern(String pattern, List<String> candidates) {
+        String regex = expandPattern(pattern);
+        Pattern compiled = Pattern.compile(regex);
+        List<String> result = new ArrayList<>();
+        for (String s : candidates) {
+            if (compiled.matcher(s).matches()) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        List<String> strings = Arrays.asList("cat", "dog", "telephone", "telephonepole", "tele", "telehoe", "teleophobnme");
+        String pattern = "tele[op]ho[bnm]e";
+        List<String> matched = matchPattern(pattern, strings);
+        System.out.println(matched); // Output: [telephone]
+    }
+}
+```
+
+---
+
+### 🧠 Optimization Ideas (for scale)
+
+If you're querying many patterns over the same list:
+- Preprocess the list into a **Trie** or **HashMap by length**.
+- Use **prefix filtering** based on literals before regex matching.
+- Cache compiled regexes if patterns repeat.
+
+---
+
+Want to wrap this into a reusable module for PromptForge or expose it as a CLI tool with pattern profiling? I can help scaffold that next.
