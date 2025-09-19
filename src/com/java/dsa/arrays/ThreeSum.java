@@ -90,4 +90,40 @@ public class ThreeSum {
 
     }
 
+    /**
+     * Dynamic Programming approach to find all unique triplets that sum to zero.
+     * This is for educational purposes and is not optimal for large arrays.
+     *
+     * @param nums the input array of integers
+     * @return a list of lists containing the unique triplets
+     */
+    public static List<List<Integer>> threeSumDP(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums == null || nums.length < 3)
+            return result;
+        int n = nums.length;
+        Arrays.sort(nums);
+        // Use a set to avoid duplicate triplets
+        java.util.Set<List<Integer>> set = new java.util.HashSet<>();
+        // dp[i][j][sum] = true if sum can be formed with j elements from first i numbers
+        // To avoid large memory, use a map for sum
+        for (int i = 0; i < n - 2; i++) {
+            // Skip duplicates for i
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            java.util.Set<Integer> seen = new java.util.HashSet<>();
+            for (int j = i + 1; j < n; j++) {
+                int complement = -nums[i] - nums[j];
+                if (seen.contains(complement)) {
+                    List<Integer> triplet = Arrays.asList(nums[i], complement, nums[j]);
+                    triplet.sort(Integer::compareTo);
+                    set.add(triplet);
+                }
+                seen.add(nums[j]);
+            }
+        }
+        result.addAll(set);
+        return result;
+    }
+
 }
