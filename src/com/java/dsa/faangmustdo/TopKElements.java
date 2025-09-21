@@ -26,6 +26,7 @@ public class TopKElements {
 			freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
 
 		// step2 bucket Array (index==freq)
+		@SuppressWarnings("unchecked")
 		List<Integer>[] buckets = new ArrayList[nums.length + 1];
 		for (int key : freqMap.keySet()) {
 			int freq = freqMap.get(key);

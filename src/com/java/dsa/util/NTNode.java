@@ -5,7 +5,7 @@ import java.util.List;
 public class NTNode {
 
 	public int val;
-	public List<NTNode> children;
+	public List<NTNode> neighbors;
 
 	public NTNode() {
 	}
@@ -16,12 +16,12 @@ public class NTNode {
 
 	public NTNode(int _val, List<NTNode> _children) {
 		val = _val;
-		children = _children;
+		neighbors = _children;
 	}
 
 	@Override
 	public String toString() {
-		return "NTNode [val=" + val + ", children=" + children + "]";
+		return "NTNode [val=" + val + ", children=" + neighbors + "]";
 	}
 	
 	

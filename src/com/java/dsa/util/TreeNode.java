@@ -61,7 +61,7 @@ public class TreeNode {
 		return root;
 	}
 
-	// in-order left root right
+	// in-order left center right - LCR
 	public static void inOrder(TreeNode root) {
 		if (root == null)
 			return;
@@ -70,7 +70,7 @@ public class TreeNode {
 		inOrder(root.right);
 	}
 
-	// pre-order root left right
+	// pre-order center left right - CLR
 	public static void preOrder(TreeNode root) {
 		if (root == null)
 			return;
@@ -79,7 +79,7 @@ public class TreeNode {
 		preOrder(root.right);
 	}
 
-	// pre-order left right root
+	// pre-order left right center - LRC
 	public static void postOrder(TreeNode root) {
 		if (root == null)
 			return;

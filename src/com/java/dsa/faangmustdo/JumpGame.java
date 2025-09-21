@@ -45,7 +45,7 @@ public class JumpGame {
 	// Determines if you can reach the last index of the array
 	public boolean canJump(int[] nums) {
 		int i=0; // Current index
-		for(int reach=0;i< nums.length && i<=reach;++i ) {
+		for(int reach=0;i< nums.length && i<=reach;i++ ) {
 			// Update the furthest index that can be reached so far
 			reach= Math.max(reach, i+ nums[i]);
 		}

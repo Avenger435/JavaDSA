@@ -13,11 +13,12 @@ public class IsPalindrome {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//		String s = "A man, a plan, a canal: Panama";
+		String s = "A man, a plan, a canal: Panama";
 //		String s = "race a car";
-		String s = "0P";
-		boolean palindrome = isPalindrome(s);
-		System.out.println("Is palindrome: " + palindrome);
+//		String s = "0P";
+//		boolean palindrome = isPalindrome(s);
+//		System.out.println("Is palindrome: " + palindrome);
+		System.out.println("validPalindrome: "+ validPalindrome(s));
 	}
 
 	// ASCII range - A-Z =65-90 a-z= 61-7A
@@ -34,6 +35,29 @@ public class IsPalindrome {
 		}
 		return sb.toString().equals(sb.reverse().toString());
 
+	}
+
+	public static boolean validPalindrome(String s) {
+
+		if (s == null || s.isEmpty())
+			return false;
+
+		int left = 0;
+		int right = s.length() - 1;
+
+		while (left < right) {
+			while (left < right && Character.isLetterOrDigit(s.charAt(left)))
+				left++;
+			while (left < right && Character.isLetterOrDigit(s.charAt(right)))
+				right--;
+
+			if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right)))
+				return false;
+
+			left++;
+			right--;
+		}
+		return true;
 	}
 
 	public static boolean isPalindrome(String s) {

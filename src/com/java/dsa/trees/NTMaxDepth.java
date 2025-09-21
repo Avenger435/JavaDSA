@@ -53,7 +53,7 @@ public class NTMaxDepth {
 
 		// track max
 		int ans = 0;
-		for (NTNode child : root.children) {
+		for (NTNode child : root.neighbors) {
 			// recursively call on the nodes;
 			ans = Math.max(ans, maxDepth(child));
 		}
@@ -80,7 +80,7 @@ public class NTMaxDepth {
 			for (int i = 0; i < size; i++) {
 				NTNode node = queue.poll();
 				if (node != null) {
-					for (NTNode child : node.children) {
+					for (NTNode child : node.neighbors) {
 						queue.offer(child);
 					}
 				}

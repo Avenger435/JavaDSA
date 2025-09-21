@@ -30,7 +30,10 @@ public class SpiralMatrix {
 		
 		//start from top 
 		while(top<=bottom && left <=right) { // Continue while boundaries are valid
-			for(int col =left;col<=right;col++) { // Traverse from left to right on top row
+			
+			
+			// Traverse from left to right on top row
+			for(int col =left;col<=right;col++) { 
 				result.add(matrix[top][col]); // Add each element to result
 			}
 			top++; // Move top boundary down
