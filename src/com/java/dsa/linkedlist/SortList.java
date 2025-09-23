@@ -9,7 +9,10 @@ public class SortList {
         head.next.next = new ListNode(arr[2]);
         head.next.next.next = new ListNode(arr[3]);
         head.next.next.next.next = new ListNode(arr[4]);
-        System.out.println(head);
+        System.out.println("Original: " + head);
+        
+        ListNode sorted = sortList(head);
+        System.out.println("Sorted: " + sorted);
     }
 
     public static ListNode sortList(ListNode head) {
