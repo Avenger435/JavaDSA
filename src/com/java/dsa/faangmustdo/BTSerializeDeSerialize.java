@@ -1,9 +1,11 @@
-package com.java.dsa.util;
+package com.java.dsa.faangmustdo;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class ScratchPad {
+import com.java.dsa.util.TreeNode;
+
+public class BTSerializeDeSerialize {
 
 	public static void main(String[] args) {
 
@@ -25,9 +27,9 @@ public class ScratchPad {
 		TreeNode.printTree(ans, serialize, false);
 	}
 
-	private static String serialize(TreeNode root) {
+	public static String serialize(TreeNode root) {
 		if (root == null)
-			return null;
+			return "";
 		StringBuilder sb = new StringBuilder();
 		serialize(root, sb);
 		return sb.toString();
@@ -36,42 +38,39 @@ public class ScratchPad {
 	private static void serialize(TreeNode root, StringBuilder sb) {
 		if (root == null)
 			return;
-
 		sb.append(root.val).append(" ");
 		serialize(root.left, sb);
 		serialize(root.right, sb);
-
 	}
-
-	private static TreeNode deserialize(String data) {
+	
+	// Decodes your encoded data to tree.
+	public static TreeNode deserialize(String data) {
 		if (data.isEmpty())
 			return null;
 
-		final String[] values = data.split(" ");
+		final String[] vals = data.split(" ");
 		Queue<Integer> q = new ArrayDeque<>();
 
-		for (final String val : values) {
+		for (final String val : vals)
 			q.offer(Integer.parseInt(val));
-		}
 
 		return deserialize(Integer.MIN_VALUE, Integer.MAX_VALUE, q);
 	}
 
-	private static TreeNode deserialize(int minValue, int maxValue, Queue<Integer> q) {
-		if (q.isEmpty()) {
+	
+
+	private static TreeNode deserialize(int mn, int mx, Queue<Integer> q) {
+		if (q.isEmpty())
 			return null;
-		}
 
 		final int val = q.peek();
-		if (val < minValue || val > maxValue)
+		if (val < mn || val > mx)
 			return null;
 
 		q.poll();
 		TreeNode root = new TreeNode(val);
-		root.left = deserialize(minValue, val, q);
-		root.right = deserialize(val, maxValue, q);
-
+		root.left = deserialize(mn, val, q);
+		root.right = deserialize(val, mx, q);
 		return root;
 	}
-
 }
