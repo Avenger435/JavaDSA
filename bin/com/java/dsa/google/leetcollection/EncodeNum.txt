@@ -1,0 +1,22 @@
+Given sequence of numbers from 0 to X, where
+0 = 000000,
+...,
+999_999 = 999999,
+1_000_000 = 00000A,
+1_000_001 = 00001A,
+...,
+_ = 99999A,
+_ = 00000B,
+...,
+_ = 00000Z,
+_ = 00001Z,
+...,
+_ = 99999Z,
+_ = 0000AZ,
+...,
+_ = 9ZZZZZ,
+_ = AZZZZZ,
+...,
+X - 1 = YZZZZZ,
+X = ZZZZZZ.
+Write a function to encode N (from 0 to X) in this format.
