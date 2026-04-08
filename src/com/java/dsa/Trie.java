@@ -1,6 +1,7 @@
 package com.java.dsa;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -85,18 +86,17 @@ public class Trie {
 			if (!node.isEndOfWord)
 				return false;
 			node.isEndOfWord = false;
-			return isEmpty(node);
+			return true;
 		}
 		char ch = word.charAt(index);
 		int idx = ch - 'a';
 		if (node.children[idx] == null)
 			return false;
-		boolean shouldDelete = deleteHelper(node.children[idx], word, index + 1);
-		if (shouldDelete) {
+		boolean deleted = deleteHelper(node.children[idx], word, index + 1);
+		if (deleted && isEmpty(node.children[idx])) {
 			node.children[idx] = null;
-			return !node.isEndOfWord && isEmpty(node);
 		}
-		return false;
+		return deleted;
 	}
 
 	private boolean isEmpty(TrieNode node) {
@@ -126,6 +126,45 @@ public class Trie {
 		return result;
 	}
 
+	/**
+	 * Returns a list of all words stored in the Trie.
+	 * 
+	 * @return list of all words
+	 */
+	public List<String> getAllWords() {
+		List<String> result = new ArrayList<>();
+		collectWords(root, "", result);
+		return result;
+	}
+
+	/**
+	 * Prints all words stored in the Trie to the console.
+	 */
+	public void printTrie() {
+		List<String> words = getAllWords();
+		System.out.println("Words in Trie:");
+		for (String word : words) {
+			System.out.println(word);
+		}
+	}
+
+	/**
+	 * Prints the Trie structure as a tree to the console.
+	 */
+	public void printTree() {
+		System.out.println("Trie Tree Structure:");
+		printTreeHelper(root, "", "");
+	}
+
+	private void printTreeHelper(TrieNode node, String prefix, String indent) {
+		System.out.println(indent + (prefix.isEmpty() ? "root" : prefix) + (node.isEndOfWord ? " (end)" : ""));
+		for (int i = 0; i < 26; i++) {
+			if (node.children[i] != null) {
+				printTreeHelper(node.children[i], "" + (char) ('a' + i), indent + "  ");
+			}
+		}
+	}
+
 	private void collectWords(TrieNode node, String current, List<String> result) {
 		if (node.isEndOfWord) {
 			result.add(current);
@@ -145,6 +184,10 @@ public class Trie {
 		TrieNode[] children = new TrieNode[26];
 		/** Flag indicating if this node marks the end of a word */
 		boolean isEndOfWord = false;
+		@Override
+		public String toString() {
+			return "TrieNode [children=" + Arrays.toString(children) + ", isEndOfWord=" + isEndOfWord + "]";
+		}
 	}
 
 	public static void main(String[] args) {
@@ -155,6 +198,8 @@ public class Trie {
 		trie.insert("bat");
 		trie.insert("ball");
 
+		trie.printTrie();
+		
 		System.out.println("Search 'apple': " + trie.search("apple"));
 		System.out.println("Search 'app': " + trie.search("app"));
 		System.out.println("Starts with 'app': " + trie.startsWith("app"));
@@ -162,6 +207,9 @@ public class Trie {
 		System.out.println("Delete 'app': " + trie.delete("app"));
 		System.out.println("Search 'app' after delete: " + trie.search("app"));
 		System.out.println("Autocomplete 'app' after delete: " + trie.autocomplete("app"));
+		
+		trie.printTrie();
+		trie.printTree();
 	}
 
 }
